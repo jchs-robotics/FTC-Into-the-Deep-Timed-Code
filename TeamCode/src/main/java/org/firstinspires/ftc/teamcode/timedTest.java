@@ -72,15 +72,15 @@ public class timedTest extends OpMode
      */
     @Override
     public void init() {
-        telemetry.addData("Status", "Initialized");wristL.setPower(-1);
-        wristR.setPower(-1);
+        telemetry.addData("Status", "Initialized");
+
 
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
-        leftFrontMotor  = hardwareMap.get(DcMotor.class, "left_front_drive");
-        leftBackMotor  = hardwareMap.get(DcMotor.class, "left_back_drive");
-        rightFrontMotor = hardwareMap.get(DcMotor.class, "right_front_drive");
-        rightBackMotor = hardwareMap.get(DcMotor.class, "right_back_drive");
+        leftFrontMotor  = hardwareMap.get(DcMotor.class, "leftFront");
+        leftBackMotor  = hardwareMap.get(DcMotor.class, "leftBack");
+        rightFrontMotor = hardwareMap.get(DcMotor.class, "rightFront");
+        rightBackMotor = hardwareMap.get(DcMotor.class, "rightBack");
 
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -89,19 +89,31 @@ public class timedTest extends OpMode
 
 
 
-        pivotL = hardwareMap.get(DcMotor.class, "left_pivot");
-        pivotR = hardwareMap.get(DcMotor.class, "right_pivot");
-        telescopeF = hardwareMap.get(DcMotor.class, "front_telescope");
-        telescopeB = hardwareMap.get(DcMotor.class, "back_telescope");
+        pivotL = hardwareMap.get(DcMotor.class, "leftPivot");
+        pivotR = hardwareMap.get(DcMotor.class, "rightPivot");
+        telescopeF = hardwareMap.get(DcMotor.class, "frontTelescope");
+        telescopeB = hardwareMap.get(DcMotor.class, "backTelescope");
+
 
         pivotL.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
+        pivotL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        pivotR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        telescopeB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        telescopeF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         //telescopeF.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        wristL = hardwareMap.get(CRServo.class, "left_wrist");
-        wristR = hardwareMap.get(CRServo.class, "right_wrist");
+        wristL = hardwareMap.get(CRServo.class, "leftWrist");
+        wristR = hardwareMap.get(CRServo.class, "rightWrist");
         intake = hardwareMap.get(CRServo.class, "intake");
 
         wristR.setDirection(CRServo.Direction.REVERSE);
+
+
+
 
 
         // Retrieve the IMU from the hardware map
@@ -148,17 +160,8 @@ Drive controls
 
 // Field centric stuff
         // controller joystick input
-//        if (-gamepad1.left_stick_y > 0.1) {
-//            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-//        } else if (-gamepad1.left_stick_y < -0.1) {
-//            double y = -gamepad1.left_stick_y;
-//        }
+
         double y = -gamepad1.left_stick_y;
-
-//        if (-0.1 < -gamepad1.left_stick_y && 0.1 > -gamepad1.left_stick_y) {
-//            double y = -gamepad1.left_stick_y;
-//        }
-
         double x = gamepad1.left_stick_x;
         double rx = gamepad1.right_stick_x;
 
@@ -231,13 +234,14 @@ Drive controls
     }
 
 
+    // TODO make sure to adjust so it doesnt break :(
         // manual arm
     if (gamepad2.a) { // retract
-        telescopeB.setPower(0.75);
-        telescopeF.setPower(0.75);
+        telescopeB.setPower(0.5);
+        telescopeF.setPower(0.5);
     } else if (gamepad2.x) { // extend
-        telescopeB.setPower(-0.75);
-        telescopeF.setPower(-0.75);
+        telescopeB.setPower(-0.5);
+        telescopeF.setPower(-0.5);
     } else {
         telescopeB.setPower(0);
         telescopeF.setPower(0);

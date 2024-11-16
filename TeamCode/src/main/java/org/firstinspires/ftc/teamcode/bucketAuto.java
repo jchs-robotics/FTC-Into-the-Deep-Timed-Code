@@ -35,10 +35,10 @@ public class bucketAuto extends OpMode {
 
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
-        leftFrontMotor  = hardwareMap.get(DcMotor.class, "left_front_drive");
-        leftBackMotor  = hardwareMap.get(DcMotor.class, "left_back_drive");
-        rightFrontMotor = hardwareMap.get(DcMotor.class, "right_front_drive");
-        rightBackMotor = hardwareMap.get(DcMotor.class, "right_back_drive");
+        leftFrontMotor  = hardwareMap.get(DcMotor.class, "leftFront");
+        leftBackMotor  = hardwareMap.get(DcMotor.class, "leftBack");
+        rightFrontMotor = hardwareMap.get(DcMotor.class, "rightFront");
+        rightBackMotor = hardwareMap.get(DcMotor.class, "rightBack");
 
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
